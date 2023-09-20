@@ -7,7 +7,7 @@ const app = express();
 
 app.use(express.json());
 
-
+// Database Connection
 const connectDB = require('./database/connect');
 
 
@@ -17,8 +17,10 @@ const connectDB = require('./database/connect');
 
 
 
-
-
+// routes
+app.get('/', (req, res) => {
+  res.send('<h1>Booking API</h1>');
+});
 
 
 
