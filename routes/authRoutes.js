@@ -1,12 +1,12 @@
 const express = require('express');
 const app = express();
 app.use(express.json());
-
+const authRouter = express.Router();
 
 const authContoller = require('../controllers/auth');
 const verificationController = require('../controllers/verification');
 const {signUpRules,loginRules} = require('../Request/authValidator');
-const authRouter = express.Router();
+
 
 
 
@@ -22,3 +22,5 @@ authRouter
 .post('/email-verification-request',verificationController.sendVerificationRequest);
 
 module.exports = authRouter;
+
+
