@@ -15,7 +15,7 @@ const bookingSchema = mongoose.Schema({
     },
     email:{
         type:String,
-        required: true,
+        required: [true, 'Please provide email']
     },
     phoneNumber:{
         type:String,
@@ -35,7 +35,7 @@ const bookingSchema = mongoose.Schema({
     },
     user:{
         type: mongoose.Schema.Types.ObjectId,
-        ref:"user"
+        ref:"User"
     }
 
 }

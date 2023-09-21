@@ -24,12 +24,15 @@ const userSchema = mongoose.Schema({
     },
     email:{
         type:String,
-        required:true,
+        required:[true, 'Please provide email'],
         unique:true
     },
     password: {
         type:String,
-        required:true,
+        required:[true, 'Please provide password'],
+        minlength: 9,
+        maxlength: 50,
+       
     },
     timestamps:true
     
