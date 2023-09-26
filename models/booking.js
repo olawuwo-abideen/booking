@@ -4,7 +4,7 @@ const validator = require('validator');
 const bookingSchema = mongoose.Schema({
     roomNumber:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'place',
+        ref: 'Room',
     },
     checkIn:{
         type: Date,
