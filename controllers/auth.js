@@ -9,7 +9,7 @@ const verificationModel = require('../model/userVerification');
 
 
 const register = async (req, res) => {
-    const { firstName, email, password } = req.body;
+    const { fullName, email, password } = req.body;
     const errors = validationResult(req);
     const saltround = 10;
     if (!errors.isEmpty()) {
@@ -19,7 +19,7 @@ const register = async (req, res) => {
     try {
         let hashedPassword = await bcrypt.hash(password, saltround)
         let OTP = Math.floor(Math.random() * new Date()).toString().slice(0, 4)
-        const user = await User.create({ firstName: firstName, email: email, password: hashedPassword });
+        const user = await User.create({ fullName: fullName, email: email, password: hashedPassword });
         await verificationModel.create({
             user: user._id,
             verificationToken: OTP
@@ -106,7 +106,13 @@ const resetPassword = async (req, res) => {
 
 
 
-
+module.exports = {
+    register,
+    login,
+    logout,
+    requestPasswordResetLink,
+    resetPassword
+  };
 
 
 

@@ -13,7 +13,7 @@ const ReserveARoom = async (req, res) => {
     } = req.body;
     try {
         const userData = await jwt.verify(token,JWT_SECRET_KEY);
-        const booking = await Booking.create({place, checkIn, checkOut, fullname, maxGuests, email, phone, price,user:userData.id});
+        const booking = await Booking.create({room, checkIn, checkOut, fullname, maxGuests, email, phone, price,user:userData.id});
         if (!booking) {
             res.status(422).json({ message: "bad request" });
         }
@@ -24,9 +24,7 @@ const ReserveARoom = async (req, res) => {
     }
 }
 
-const retrievAReservedRoom =() =>{
 
-}
 
 const retrievAllReservedRoom =async (req, res) =>{
     const {token}  = req.cookies;
@@ -41,6 +39,5 @@ const retrievAllReservedRoom =async (req, res) =>{
 }
 module.exports = {
     ReserveARoom,
-    retrievAllReservedRoom,
-    retrievAReservedRoom
+    retrievAllReservedRoom
 }
