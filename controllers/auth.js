@@ -8,7 +8,6 @@ const verificationModel = require('../model/userVerification');
 
 
 
-
 const register = async (req, res) => {
     const { firstName, email, password } = req.body;
     const errors = validationResult(req);
