@@ -1,107 +1,68 @@
-const imageDownloader = require('image-downloader');
-const fs = require('fs');
 const jwt = require('jsonwebtoken');
-const Place = require('../model/places');
-const placeModel = require('../model/places');
-const ImageTransformer = require('../utils/ImageTransformer');
-const cloudinary  = require('../utils/fileUpload');
-const { title } = require('process');
+const Room = require('../models/room');
 require('dotenv').config();
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY 
 
-const imageDownload = async (req,res) => {
-    const {link} = req.body;
-    const newName = 'photo-' + Date.now() +'.jpg';
-   try {
-    await imageDownloader.image({
-        url: link,
-        dest: `${__dirname}/images/${newName}`
-    })
-    res.status(200).json(newName);
-   } catch (error) {
-    res.status(500).json({message:error.message});
-   }
-}
-const uploadFiles = async (req, res) => {
-    const uploadedFiles = [];
-    try {
-        for (let i = 0; i < req.files.length; i++) {
-            const {path,originalname} = req.files[i];
-            const parts = originalname.split('.');
-            const ext = parts[parts.length - 1];
-            const newName = "photo-"+ Date.now() +"." + ext;
-            fs.renameSync(path, __dirname+'/images/'+newName);
-            uploadedFiles.push(newName);
-            };
-            res.status(200).json(uploadedFiles);
-    } catch (error) {
-        console.log(error);
-    }
-    }
 
-const addNewPlace  = async (req, res) => {
+const addNewRoom  = async (req, res) => {
     const {token} = req.cookies;
     const {
-        title,Description,address,addedPhoto,
-        checkIn,checkOut,maxGuests,perks,extraInfo,price
+        roomNumber, suite, checkIn, 
+        checkOut,maxGuests,price
     } = req.body;
     const userData = await jwt.verify(token,JWT_SECRET_KEY);
         
-        const placeDoc = await Place.create({
+        const roomInfo = await Room.create({
             user: userData.id,
-            title: title,
-            Description: Description,
-            addresses: address,
+            roomNumber:roomNumber,
+            suite: suite,
             checkIn: checkIn,
             checkOut: checkOut,
             maxGuests: maxGuests,
-            perks: perks,
-            image: addedPhoto,
-            price: price,
-            extraInfo: extraInfo
+            price: price
         })
-        res.status(201).json(placeDoc);
+        res.status(201).json(roomInfo);
 }
-const retrieveUserPlaces = async (req, res) => {
+
+const retrieveUserRooms = async (req, res) => {
     const {token} = req.cookies;
     const userData = await jwt.verify(token,JWT_SECRET_KEY);
     const {id} = userData;
-    const places = await Place.find({user:id});
-    res.status(200).json(places);
+    const rooms = await Room.find({user:id});
+    res.status(200).json(rooms);
 }
-const retrieveAUserplace = async (req, res) => {
+
+const retrieveAUserRoom = async (req, res) => {
     const {id} = req.params;
-    res.status(200).json(await Place.findById(id));
+    res.status(200).json(await Room.findById(id));
 }
-const showPlace = async (req, res) => {
+const showRoom = async (req, res) => {
     const {id} = req.params;
-    res.status(200).json(await Place.findById(id));
+    res.status(200).json(await Room.findById(id));
 }
-const updateAplace = async (req, res) => {
+
+const updateARoom = async (req, res) => {
     const {id} = req.params;
     const {token} = req.cookies;
     const {
-        title,Description,address,addedPhoto,
-        checkIn,checkOut,maxGuests,perks,extraInfo,price
+        roomNumber, suite, checkIn, 
+        checkOut,maxGuests,price
     } = req.body;
     const userData = await jwt.verify(token,JWT_SECRET_KEY);
     if(userData && userData.id){
-        const place = await Place.findById(id);
-        if(place && place.user.toString() === userData.id) {
+        const room = await Room.findById(id);
+        if(room && room.user.toString() === userData.id) {
             
-           await Place.updateOne({_id: place._id},{
-                title: title,
-                Description: Description,
-                addresses: address,
-                checkIn: checkIn,
-                checkOut: checkOut,
-                maxGuests: maxGuests,
-                perks: perks,
-                image: addedPhoto,
-                price: price,
-                extraInfo: extraInfo
+           await Room.updateOne({_id: room._id},{
+            user: userData.id,
+            roomNumber:roomNumber,
+            suite: suite,
+            checkIn: checkIn,
+            checkOut: checkOut,
+            maxGuests: maxGuests,
+            price: price
            })
-            res.status(200).json(price+'hello world');
+            res.status(200).json(room);
         }else{
             res.status(404).json({message: ' 404 Not Found'});
         }
@@ -110,33 +71,17 @@ const updateAplace = async (req, res) => {
     }
 }
 
-const retrieveAllPlaces = async(req, res) => {
-    const places = await Place.find();
-    res.status(200).json(places);
+const retrieveAllRooms = async(req, res) => {
+    const rooms = await Room.find();
+    res.status(200).json(rooms);
 }
 
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- */
-const sortPlaces = async(req, res) => {
-
-};
-
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- * keys.some((key) => place[key] && place[key].toLowerCase().includes(value)))
- * const result = await placeModel.find({title:{$regex: value,$options:'i'}});
- */
-const searchPlaces = async(req, res) => {
+const searchRooms = async(req, res) => {
    try {
-    const keys = ['title', 'Description', 'address', 'perks']
+    const keys = ['suite', 'maxGuests', 'price']
     const {value} =req.params;
-    const places = await placeModel.find();
-    const result = places.filter((place) => place.title.includes(value));
+    const rooms = await Room.find();
+    const result = rooms.filter((room) => room.title.includes(value));
     console.log(result);
     if (result.length === 0) {
        return  res.status(404).json({status:'failure',message:'not found'});
@@ -150,18 +95,12 @@ const searchPlaces = async(req, res) => {
 };
 
 
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- */
-const filterPlaces = async(req, res) => {
-
-};
-module.exports = {
-                imageDownload, uploadFiles, 
-                addNewPlace,retrieveUserPlaces,
-                retrieveAUserplace,updateAplace,
-                retrieveAllPlaces,showPlace,
-                searchPlaces,filterPlaces,sortPlaces
+module.exports = { 
+         addNewRoom,
+         retrieveUserRooms,
+         retrieveAUserRoom,
+         showRoom,
+         updateARoom, 
+         retrieveAllRooms,
+         searchRooms,
                 };
