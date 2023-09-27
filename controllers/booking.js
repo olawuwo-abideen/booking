@@ -31,7 +31,7 @@ const retrievAllReservedRoom =async (req, res) =>{
     try{
         const userData = await jwt.verify(token,JWT_SECRET_KEY);
         const {id} = userData;
-        const bookingData = await Booking.find({user:id}).populate('place');
+        const bookingData = await Booking.find({user:id}).populate('room');
         res.status(200).json(bookingData);
     }catch(e){
         res.status(500).json({message:e.message});
