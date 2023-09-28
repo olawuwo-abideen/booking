@@ -26,7 +26,7 @@ const ReserveARoom = async (req, res) => {
 
 
 
-const retrievAllReservedRoom =async (req, res) =>{
+const retrievAllReservedRoom = async (req, res) =>{
     const {token}  = req.cookies;
     try{
         const userData = await jwt.verify(token,JWT_SECRET_KEY);
@@ -34,7 +34,7 @@ const retrievAllReservedRoom =async (req, res) =>{
         const bookingData = await Booking.find({user:id}).populate('room');
         res.status(200).json(bookingData);
     }catch(e){
-        res.status(500).json({message:e.message});
+        res.status(500).json({status: 'failure', message: error.message});
     }
 }
 module.exports = {

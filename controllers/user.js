@@ -111,6 +111,8 @@ const deleteUserAccount = async (req, res) => {
     await User.deleteOne({ _id: verify.id });
     res.status(204).json({ status: 'success', message: "account deleted successfully" });
 };
+
+
 module.exports = {
     getUserProfile,
     updateUserProfile,
