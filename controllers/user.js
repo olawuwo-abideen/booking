@@ -21,9 +21,6 @@ const getUserProfile = async (req, res) => {
 }
 
 
-
-
-
 const updateUserProfile = async (req, res) => {
     const { token } = req.cookies;
     try {
