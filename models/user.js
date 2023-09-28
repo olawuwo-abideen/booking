@@ -15,10 +15,6 @@ const userSchema = mongoose.Schema({
         required:true,
         enum: ['Business', 'Pleasure' ]
     },
-    profileImage:{
-        type:String,
-        required:true
-    },
     email:{
         type:String,
         required:true,

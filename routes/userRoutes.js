@@ -4,9 +4,9 @@ const app = express();
 const userRouter = express.Router();
 app.use(express.json());
 
-userRouter.get('/profile',userController.getProfile);
-userRouter.patch('/profile',userController.updateProfile);
+userRouter.get('/profile',userController.getUserProfile);
+userRouter.patch('/profile',userController.updateUserProfile);
 userRouter.patch('/password',userController.inAccountPasswordUpdate);
-userRouter.delete('/profile',userController.deleteAccount);
+userRouter.delete('/profile',userController.deleteUserAccount);
 
 module.exports = userRouter;
