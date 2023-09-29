@@ -1,9 +1,9 @@
 require('dotenv').config();
-
-
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const express = require('express');
 const app = express();
-
+const routes = require('./routes/index');
 
 app.use(express.json());
 
@@ -12,8 +12,9 @@ const connectDB = require('./database/connect');
 
 
 
-
-
+//Middlewares
+app.use(cookieParser());
+app.use(cors());
 
 
 
@@ -29,6 +30,8 @@ app.get('/', (req, res) => {
 
 
 
+
+app.use('/api/', routes)
 
 
 
