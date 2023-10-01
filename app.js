@@ -3,9 +3,9 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const express = require('express');
 const app = express();
-const routes = require('./routes/index');
+const routes = require('./routes/index')
 
-app.use(express.json());
+app.use(express.json({limit:'50mb'}));
 
 // Database Connection
 const connectDB = require('./database/connect');

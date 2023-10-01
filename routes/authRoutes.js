@@ -3,9 +3,11 @@ const app = express();
 app.use(express.json());
 const authRouter = express.Router();
 
-const authContoller = require('../controllers/auth');
+const authController = require('../controllers/auth');
 const verificationController = require('../controllers/verification');
-const {signUpRules,loginRules} = require('../Request/authValidator');
+const {signUpRules,loginRules} = require('../requestValidator/authValidator');
+
+
 
 
 
@@ -13,12 +15,12 @@ const {signUpRules,loginRules} = require('../Request/authValidator');
 
 
 authRouter
-.post('/register',signUpRules,authContoller.register)
-.post('/login',loginRules,authContoller.login)
-.post('/logout',authContoller.logout)
-.post('/request-password-reset-link',authContoller.requestPasswordResetLink)
+.post('/register',signUpRules,authController.register)
+.post('/login',loginRules,authController.login)
+.post('/logout',authController.logout)
+.post('/request-password-reset-link',authController.requestPasswordResetLink)
 .patch('/email-verification',verificationController.verifyUser)
-.patch('/reset-password',authContoller.resetPassword)
+.patch('/reset-password',authController.resetPassword)
 .post('/email-verification-request',verificationController.sendVerificationRequest);
 
 module.exports = authRouter;

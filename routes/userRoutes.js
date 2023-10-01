@@ -6,7 +6,9 @@ app.use(express.json());
 
 userRouter.get('/profile',userController.getUserProfile);
 userRouter.patch('/profile',userController.updateUserProfile);
-userRouter.patch('/password',userController.inAccountPasswordUpdate);
+userRouter.patch('/password',userController.userAccountPasswordUpdate);
 userRouter.delete('/profile',userController.deleteUserAccount);
 
 module.exports = userRouter;
+
+

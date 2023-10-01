@@ -3,7 +3,7 @@ const roomController = require('../controllers/room');
 
 
 
-roomRouter.post('/room',     roomController.addNewPlace);
+roomRouter.post('/room',     roomController.addNewRoom);
 
 
 roomRouter.get('/rooms',      roomController.retrieveUserRooms);
