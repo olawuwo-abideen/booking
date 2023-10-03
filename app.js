@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const app = express();
 const routes = require('./routes/index')
-
+const base_url = process.env.BASE_URL
 app.use(express.json({limit:'50mb'}));
 
 // Database Connection
@@ -14,23 +14,18 @@ const connectDB = require('./database/connect');
 
 //Middlewares
 app.use(cookieParser());
-app.use(cors());
-
+app.use(cors({
+  credentials: true,
+  origin: base_url,
+  sameSites: true,
+  secure: true
+}));
 
 
 // routes
 app.get('/', (req, res) => {
-  res.send('<h1>Booking API</h1>');
+  res.send('<h1> Booking Api </h1>');
 });
-
-
-
-
-
-
-
-
-
 app.use('/api/', routes)
 
 
