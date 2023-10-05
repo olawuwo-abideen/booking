@@ -4,7 +4,7 @@ A Hotel Booking app
 
 ## Features
 
-- **User**: User can register, login, logout, updatevpassword, verify username, update profile and update password.
+- **User**: User can register, login, logout, update password, verify username, update profile and update password.
 
 - **Bookings**: User can request for a booking and check his booking Status.
 
