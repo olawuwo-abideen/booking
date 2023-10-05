@@ -60,8 +60,8 @@ npm install
 
 Set up the environment variables:
 
-Open the .env file and update the values according to your configuration.
-Start the MongoDB server:
+Create the .env file and setup the MongoDB URL.
+
 
 The server will start running on the specified port (default: 3000) and establish a connection to the MongoDB database.
 
@@ -76,7 +76,7 @@ http://localhost:3000
 
 to start using the app.
 
-API Endpoints
+# API Endpoints
 
 The following API endpoints are available:
 
