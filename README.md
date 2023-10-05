@@ -56,6 +56,15 @@ npm start
 
 ```
 
+npm install
+
+Set up the environment variables:
+
+Open the .env file and update the values according to your configuration.
+Start the MongoDB server:
+
+The server will start running on the specified port (default: 3000) and establish a connection to the MongoDB database.
+
 This will start the app and set it up to listen for incoming connections on port 3000. Open up your browser of choice
 and go to the url
 
