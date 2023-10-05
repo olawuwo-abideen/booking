@@ -56,8 +56,6 @@ npm start
 
 ```
 
-npm install
-
 Set up the environment variables:
 
 Create the .env file and setup the MongoDB URL.
