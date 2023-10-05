@@ -62,7 +62,6 @@ Set up the environment variables:
 
 Create the .env file and setup the MongoDB URL.
 
-
 The server will start running on the specified port (default: 3000) and establish a connection to the MongoDB database.
 
 This will start the app and set it up to listen for incoming connections on port 3000. Open up your browser of choice
@@ -76,7 +75,7 @@ http://localhost:3000
 
 to start using the app.
 
-# API Endpoints
+## API Endpoints
 
 The following API endpoints are available:
 
