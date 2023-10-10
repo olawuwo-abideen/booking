@@ -2,6 +2,8 @@ require('dotenv').config();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const express = require('express');
+const rateLimit = require('express-rate-limit')
+const helmet = require("helmet")
 const app = express();
 const routes = require('./routes/index')
 const base_url = process.env.BASE_URL
@@ -12,7 +14,9 @@ const connectDB = require('./database/connect');
 
 
 
+
 //Middlewares
+app.use(helmet());
 app.use(cookieParser());
 app.use(cors({
   credentials: true,
@@ -20,6 +24,16 @@ app.use(cors({
   sameSites: true,
   secure: true
 }));
+
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, 
+	limit: 100, 
+	standardHeaders: 'draft-7', 
+	legacyHeaders: false, 
+
+})
+
+app.use(limiter)
 
 
 // routes
