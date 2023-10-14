@@ -1,5 +1,7 @@
 const Booking = require('../models/booking');
 require('dotenv').config();
+const { StatusCodes } = require('http-status-codes');
+const CustomError = require('../errors');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
 

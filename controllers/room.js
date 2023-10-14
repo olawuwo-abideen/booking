@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 const Room = require('../models/room');
+const { StatusCodes } = require('http-status-codes');
+const CustomError = require('../errors');
 require('dotenv').config();
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY 
 

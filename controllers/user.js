@@ -1,6 +1,8 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const { StatusCodes } = require('http-status-codes');
+const CustomError = require('../errors');
 require('dotenv').config();
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
