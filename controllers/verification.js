@@ -19,13 +19,13 @@ const sendVerificationRequest = async (req, res) => {
         verificationToken:OTP
     });
     sendEmail(userData.email,`${BASE_URL}/verification/?id=${userData.id}`,OTP);
-    res.status(200).json({
+    res.status(StatusCodes.OK).json({
         status:'success',
         message: 'Verification code sent'
     });
 
    } catch (error) {
-    res.status(500).json({
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         status:'failure',
         message: error.message});
    }
@@ -38,25 +38,25 @@ const verifyUser = async (req, res) => {
     try {
        const user = await verificationModel.findOne({user: userData.id});
         if(token !== user.verificationToken){
-            res.status(400).json({
+            res.status(StatusCodes.BAD_REQUEST).json({
                 status: 'failure',
                 message:'invalid verification Token'
             });
             return;
         } else if((Date.now().valueOf() - new Date(user.createdAt).valueOf())/(1000*60*60) > 1){
-            res.status(400).json({
+            res.status(StatusCodes.BAD_REQUEST).json({
                 status:'failure',
                 message:'Expired verification Token'
             })
         }
         await userModel.updateOne({_id:userData.id},{isVerified:true});
         await verificationModel.deleteMany({user:userData.id});
-        res.status(201).json({
+        res.status(StatusCodes.CREATED).json({
             status:'success',
             message:'Verification successful'
         })
     } catch (error) {
-       res.status(500).json({
+       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         status:"failure",
         message: error.message}); 
     }

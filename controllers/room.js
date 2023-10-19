@@ -23,7 +23,7 @@ const addNewRoom  = async (req, res) => {
             maxGuests: maxGuests,
             price: price
         })
-        res.status(201).json(roomInfo);
+        res.status(StatusCodes.CREATED).json(roomInfo);
 }
 
 const retrieveUserRooms = async (req, res) => {
@@ -31,16 +31,16 @@ const retrieveUserRooms = async (req, res) => {
     const userData = await jwt.verify(token,JWT_SECRET_KEY);
     const {id} = userData;
     const rooms = await Room.find({user:id});
-    res.status(200).json(rooms);
+    res.status(StatusCodes.OK).json(rooms);
 }
 
 const retrieveAUserRoom = async (req, res) => {
     const {id} = req.params;
-    res.status(200).json(await Room.findById(id));
+    res.status(StatusCodes.OK).json(await Room.findById(id));
 }
 const showRoom = async (req, res) => {
     const {id} = req.params;
-    res.status(200).json(await Room.findById(id));
+    res.status(StatusCodes.OK).json(await Room.findById(id));
 }
 
 const updateARoom = async (req, res) => {
@@ -64,18 +64,18 @@ const updateARoom = async (req, res) => {
             maxGuests: maxGuests,
             price: price
            })
-            res.status(200).json(room);
+            res.status(StatusCodes.OK).json(room);
         }else{
-            res.status(404).json({message: ' 404 Not Found'});
+            res.status(StatusCodes.NOT_FOUND).json({message: ' 404 Not Found'});
         }
     }else{
-        res.status(403).json({message: ' Access Denied'});
+        res.status(StatusCodes.FORBIDDEN).json({message: ' Access Denied'});
     }
 }
 
 const retrieveAllRooms = async(req, res) => {
     const rooms = await Room.find();
-    res.status(200).json(rooms);
+    res.status(StatusCodes.OK).json(rooms);
 }
 
 const searchRooms = async(req, res) => {
@@ -86,11 +86,11 @@ const searchRooms = async(req, res) => {
     const result = rooms.filter((room) => room.title.includes(value));
     console.log(result);
     if (result.length === 0) {
-       return  res.status(404).json({status:'failure',message:'not found'});
+       return  res.status(StatusCodes.NOT_FOUND).json({status:'failure',message:'not found'});
     }
-   return res.status(200).json({status:'success',result});
+   return res.status(StatusCodes.OK).json({status:'success',result});
    } catch (error) {
-    res.status(500).json({ status:'failure', message: error.message});
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ status:'failure', message: error.message});
    }
 
 

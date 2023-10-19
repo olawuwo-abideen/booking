@@ -17,12 +17,12 @@ const ReserveARoom = async (req, res) => {
         const userData = await jwt.verify(token,JWT_SECRET_KEY);
         const booking = await Booking.create({room, checkIn, checkOut, fullname, maxGuests, email, phone, price,user:userData.id});
         if (!booking) {
-            res.status(422).json({ message: "bad request" });
+            res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ message: "bad request" });
         }
         
-        res.status(201).json(booking);
+        res.status(StatusCodes.CREATED).json(booking);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error.message });
     }
 }
 
@@ -34,9 +34,9 @@ const retrievAllReservedRoom = async (req, res) =>{
         const userData = await jwt.verify(token,JWT_SECRET_KEY);
         const {id} = userData;
         const bookingData = await Booking.find({user:id}).populate('room');
-        res.status(200).json(bookingData);
+        res.status(StatusCodes.OK).json(bookingData);
     }catch(e){
-        res.status(500).json({status: 'failure', message: error.message});
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({status: 'failure', message: error.message});
     }
 }
 module.exports = {
