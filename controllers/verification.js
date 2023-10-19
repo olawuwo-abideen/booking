@@ -2,7 +2,6 @@ const userModel = require('../models/user');
 const verificationModel = require('../models/userVerification');
 const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
-const CustomError = require('../errors');
 const sendEmail = require('./sendEmail/verificationMail');
 require('dotenv').config();
 

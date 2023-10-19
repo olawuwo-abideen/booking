@@ -3,7 +3,6 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
-const CustomError = require('../errors');
 const { validationResult } = require('express-validator');
 const sendMail = require('./sendEmail/verificationMail');
 const verificationModel = require('../models/userVerification');
