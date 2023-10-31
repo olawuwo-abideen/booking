@@ -1,6 +1,7 @@
 # Booking
 
-A Hotel Booking app
+A Backend to an hotel booking application that allows travelers to create a profile, search for room, compare, and book accommodations for their trips. This application focuses on
+providing a seamless booking experience, detailed information about the hotels, and secure payment processing.
 
 ## Features
 
